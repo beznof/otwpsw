@@ -28,7 +28,7 @@ check_file() {
 				echo -e "\n${SUCCESS}File created successfully${RESET}\n"
 				return 0
 			else
-				echo -e "\n${WARNING}Couldn't create a file${RESET}\N"
+				echo -e "\n${WARNING}Couldn't create the file${RESET}\N"
 				return 1
 			fi
 			;;
@@ -60,7 +60,7 @@ find_entry() {
 				then
 					echo -e "${SUCCESS}Password updated successfully${RESET}\n"
 				else
-					echo -e "${WARNING}Couldn't update the new password${RESET}\n"
+					echo -e "${WARNING}Couldn't update the password${RESET}\n"
 					return 3
 				fi 
 				;;
@@ -68,7 +68,7 @@ find_entry() {
 				;;
 		esac
 	else
-		echo -n "Entry does not exists. Would you like to add it? [y/n]: "
+		echo -n "${WARNING}Entry does not exist. Would you like to add it? [y/n]: ${RESET}"
 		read yn
 		echo ""
 
