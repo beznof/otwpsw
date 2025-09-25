@@ -2,8 +2,10 @@
 
 # File that stores passwords
 PASSWORDS_FILE="passwords.data"
-PASSWORDS_FILE_DIR="/home/"$(whoami)"/.otwpsw"
+PASSWORDS_FILE_DIR="${HOME}/.otwpsw"
 PASSWORDS_FILE_FP="${PASSWORDS_FILE_DIR}/${PASSWORDS_FILE}"
+umask 077
+trap "umask 022" EXIT
 
 # Colors for text
 WARNING="\033[1;31m"
@@ -18,9 +20,10 @@ check_file() {
 		return 0;
 	fi
 
-	echo -e "${WARNING}File (${PASSOWRDS_FILES_FP}) doesn't exist\n"
+	echo -e "${WARNING}File (${PASSWORDS_FILE_FP}) doesn't exist\n"
 	echo -en "Do you wish to create it? [y/n]: ${RESET}"
 	read yn
+	echo ""
 
 	case "$yn" in
 		[Yy]* )
@@ -38,10 +41,10 @@ check_file() {
 			error_touch=$(touch "$PASSWORDS_FILE_FP" 2>&1 1>/dev/null)
 			if [ $? -eq 0 ]
 			then
-				echo -e "\n${SUCCESS}File created successfully${RESET}\n"
+				echo -e "${SUCCESS}File created successfully${RESET}\n"
 				return 0
 			else
-				echo -e "\n${WARNING}Couldn't create the file:${RESET}\n\t${error_touch}\n"
+				echo -e "${WARNING}Couldn't create the file:${RESET}\n\t${error_touch}\n"
 				return 2
 			fi
 			;;
